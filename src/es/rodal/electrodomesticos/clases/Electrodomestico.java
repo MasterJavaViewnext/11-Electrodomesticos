@@ -10,10 +10,10 @@ public class Electrodomestico {
 	protected static final Color COLOR_DEFAULT = Color.BLANCO;
 	protected static final ConsumoEnergetico CONSUMO_DEFAULT = ConsumoEnergetico.F;
 
-	private double precio;
-	private double peso;
-	private Color color;
-	private ConsumoEnergetico consumo;
+	protected double precio;
+	protected double peso;
+	protected Color color;
+	protected ConsumoEnergetico consumo;
 
 	public Electrodomestico() {
 		this.precio = PRECIO_DEFAULT;
@@ -29,11 +29,12 @@ public class Electrodomestico {
 		this.consumo = CONSUMO_DEFAULT;
 	}
 
-	public Electrodomestico(double precio, double peso, Color color, char consumo) {
+	public Electrodomestico(double precio, double peso, String color, char consumo) {
 		this.precio = precio;
 		this.peso = peso;
-		this.color = color;
-		this.consumo = comprobarConsumoEnergetico(consumo);
+		this.color = getEnumValueOrDefault(color, Color.class, COLOR_DEFAULT);
+		//this.consumo = comprobarConsumoEnergetico(consumo);
+		this.consumo = getEnumValueOrDefault(String.valueOf(consumo), ConsumoEnergetico.class, CONSUMO_DEFAULT);
 
 	}
 
@@ -52,8 +53,6 @@ public class Electrodomestico {
 	public ConsumoEnergetico getConsumo() {
 		return consumo;
 	}
-	
-	
 
 	/**
 	 * Metodo que devuelve el ConusmoEnergetico si la letra introducida forma
@@ -63,7 +62,6 @@ public class Electrodomestico {
 	 * @return
 	 */
 	private ConsumoEnergetico comprobarConsumoEnergetico(char letra) {
-
 		//Variable necesaria para modificar dentro de la lambda
 		var resultado = new Object() { ConsumoEnergetico value = CONSUMO_DEFAULT; };
 
@@ -72,12 +70,42 @@ public class Electrodomestico {
 				resultado.value = consumo;
 			}
 		});
-
 		return resultado.value;
 	}
 	
+	/**
+	 * Metodo generico que devuelve el valor recibido del enum si lo encuentra, si no el valor por defecto
+	 * @param <T>
+	 * @param value
+	 * @param enumClass
+	 * @param defaultValue
+	 * @return enumValue
+	 */
+	public static <T extends Enum<T>> T getEnumValueOrDefault(String value, Class<T> enumClass, T defaultValue) {
+        try {
+        	//Devuelve el valor del enum si lo encuentra
+            return Enum.valueOf(enumClass, value.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            //Si el valor no existe devuelve el valor predeterminado
+            return defaultValue;
+        }
+    }
 	
-	
+	public double precioFinal() {
+		double precioPeso;
+
+		if(this.peso<20) {
+			precioPeso = 10; 
+		} else if (this.peso < 50) {
+			precioPeso = 50;
+		} else if (this.peso < 80) {
+			precioPeso = 80;
+		} else {
+			precioPeso = 100;
+		}
+		
+		return precioPeso + this.precio + this.consumo.getPrecio();
+	}
 
 	@Override
 	public String toString() {
