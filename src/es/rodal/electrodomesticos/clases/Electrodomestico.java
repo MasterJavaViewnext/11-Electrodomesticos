@@ -3,8 +3,12 @@ package es.rodal.electrodomesticos.clases;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Clase padre de la que heredan Lavadora y Television
+ */
 public class Electrodomestico {
 
+	//Constantes con los valores por defecto
 	protected static final double PRECIO_DEFAULT = 100;
 	protected static final double PESO_DEFAULT = 5;
 	protected static final Color COLOR_DEFAULT = Color.BLANCO;
@@ -91,6 +95,11 @@ public class Electrodomestico {
         }
     }
 	
+	/**
+	 * Método que devuelve el precio final calculado dependiendo del ConsumoEnergetico asignado y
+	 * el peso, este método será sobreescrito por los que hereden y añadiran otro suplemento
+	 * @return precioFinal
+	 */
 	public double precioFinal() {
 		double precioPeso;
 
