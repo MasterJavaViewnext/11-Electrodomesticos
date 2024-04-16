@@ -32,7 +32,8 @@ public class Principal {
 			
 			if (electrodomestico instanceof Lavadora) {
 				sumaLavadoras += electrodomestico.precioFinal();
-			} else if (electrodomestico instanceof Television) {
+			} 
+			if (electrodomestico instanceof Television) {
 				sumaTelevisiones += electrodomestico.precioFinal();
 			}
 		}

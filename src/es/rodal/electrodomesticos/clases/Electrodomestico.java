@@ -64,6 +64,7 @@ public class Electrodomestico {
 	 * @param letra
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private ConsumoEnergetico comprobarConsumoEnergetico(char letra) {
 		//Variable necesaria para modificar dentro de la lambda
 		var resultado = new Object() { ConsumoEnergetico value = CONSUMO_DEFAULT; };
