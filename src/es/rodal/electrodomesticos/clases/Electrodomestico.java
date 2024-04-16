@@ -1,7 +1,6 @@
 package es.rodal.electrodomesticos.clases;
 
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Clase padre de la que heredan Lavadora y Television
